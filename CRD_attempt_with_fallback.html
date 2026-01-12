@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>CRD attempt + fallback to noVNC — Open in Colab</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <style>
+    body { font-family: system-ui, -apple-system, Roboto, "Segoe UI", Arial; max-width:900px; margin:2rem auto; line-height:1.5; }
+    pre { background:#f6f8fa; padding:1rem; overflow:auto; }
+    .btn { display:inline-block; margin:.5rem 0; padding:.6rem 1rem; background:#1a73e8; color:white; border-radius:6px; text-decoration:none; }
+    .hint { font-size:0.95rem; color:#444; }
+    .note { background:#fff3cd; border-left:4px solid #ffecb5; padding:1rem; margin:1rem 0; }
+  </style>
+</head>
+<body>
+  <h1>CRD attempt + fallback to noVNC (Colab)</h1>
+
+  <p>This page contains the instructions for the <strong>CRD_attempt_with_fallback.ipynb</strong> notebook and an Open-in-Colab link you must update after uploading the notebook to your Google Drive.</p>
+
+  <h2>Quick summary</h2>
+  <ul>
+    <li>Tries Chrome Remote Desktop (manual register step); if that fails uses Xfce + x11vnc + noVNC fallback.</li>
+    <li>Includes code-server (VS Code) bound to 127.0.0.1:8080.</li>
+    <li>Uses cloudflared to create public URLs for code-server and noVNC.</li>
+  </ul>
+
+  <div class="note">
+    <strong>Security & limits:</strong> change passwords, keep sessions short, Colab sessions are ephemeral. CRD is fragile in Colab.
+  </div>
+
+  <h2>How to make the “Open in Colab” link work</h2>
+  <ol>
+    <li>Download the notebook file <code>CRD_attempt_with_fallback.ipynb</code> from this page (or from the bundle you downloaded).</li>
+    <li>Open Google Drive in your browser and upload the .ipynb file into the folder where you want it.</li>
+    <li>Right-click the uploaded file → Get link → copy the file ID from the URL (the long string between <code>/d/</code> and <code>/view</code>).</li>
+    <li>Replace the placeholder <code>REPLACE_WITH_DRIVE_FILE_ID</code> in the button link below with that file ID and save this HTML file (or edit it in your Drive if you uploaded it there).</li>
+  </ol>
+
+  <p class="hint">Example Colab-from-Drive URL format:</p>
+  <pre>https://colab.research.google.com/drive/REPLACE_WITH_DRIVE_FILE_ID</pre>
+
+  <p>
+    <!-- Replace REPLACE_WITH_DRIVE_FILE_ID with your uploaded notebook file id -->
+    <a id="open-colab" class="btn" href="https://colab.research.google.com/drive/REPLACE_WITH_DRIVE_FILE_ID" target="_blank" rel="noopener">Open Notebook in Colab (from Drive)</a>
+  </p>
+
+  <h2>If you prefer to open directly from GitHub</h2>
+  <p>If you host <code>CRD_attempt_with_fallback.ipynb</code> in a public GitHub repo, use:</p>
+  <pre>https://colab.research.google.com/github/&lt;owner&gt;/&lt;repo&gt;/blob/&lt;branch&gt;/path/to/CRD_attempt_with_fallback.ipynb</pre>
+
+  <h2>Full instructions (copied from the notebook)</h2>
+  <pre>
+1) Install desktop components, code-server, noVNC/websockify, and cloudflared.
+2) Attempt Chrome Remote Desktop registration (manual step via https://remotedesktop.google.com/headless).
+3) If no registration command, the notebook runs fallback:
+   - Start Xvfb (DISPLAY=:1)
+   - Start Xfce
+   - Start x11vnc on port 5901
+   - Start websockify/noVNC on port 6080
+   - Start code-server on 127.0.0.1:8080 with password (default: "colab")
+4) Start cloudflared tunnels for 8080 and 6080. Check logs for .trycloudflare.com URLs.
+  </pre>
+
+  <h3>Notes</h3>
+  <ul>
+    <li>Change the default password (env var PASSWORD) before exposing publicly.</li>
+    <li>If you want automation to upload to Drive and produce working links, use the provided upload script (<code>upload_to_gdrive.py</code>) and provide two folder IDs.</li>
+  </ul>
+
+  <hr/>
+  <p class="hint">When you are ready, upload the .ipynb to Drive and then edit the button above to include the Drive file ID. If you want, I can give step-by-step commands for the upload using the script I provided below.</p>
+</body>
+</html>

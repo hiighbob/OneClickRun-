@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>noVNC + code-server + cloudflared — Open in Colab</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <style>
+    body { font-family: system-ui, -apple-system, Roboto, "Segoe UI", Arial; max-width:900px; margin:2rem auto; line-height:1.5; }
+    pre { background:#f6f8fa; padding:1rem; overflow:auto; }
+    .btn { display:inline-block; margin:.5rem 0; padding:.6rem 1rem; background:#0f9d58; color:white; border-radius:6px; text-decoration:none; }
+    .note { background:#e8f5e9; border-left:4px solid #c8e6c9; padding:1rem; margin:1rem 0; }
+  </style>
+</head>
+<body>
+  <h1>Recommended: noVNC + code-server with cloudflared (Colab)</h1>
+
+  <p>This page contains the instructions for the <strong>cloudflared_noVNC_with_codeserver.ipynb</strong> notebook and an Open-in-Colab link you will update after uploading the notebook to your Google Drive.</p>
+
+  <div class="note">
+    <strong>Recommended:</strong> Use the noVNC route, and expose via <em>cloudflared</em> (not ngrok). Change passwords and keep sessions short.
+  </div>
+
+  <h2>How to make the “Open in Colab” link work</h2>
+  <ol>
+    <li>Download <code>cloudflared_noVNC_with_codeserver.ipynb</code>.</li>
+    <li>Upload it to the Drive folder where you want it.</li>
+    <li>Get the file ID (string between <code>/d/</code> and <code>/view</code> in the Drive web link).</li>
+    <li>Replace <code>REPLACE_WITH_DRIVE_FILE_ID</code> in the button below with that file ID.</li>
+  </ol>
+
+  <p class="hint">Colab-from-Drive link format:</p>
+  <pre>https://colab.research.google.com/drive/REPLACE_WITH_DRIVE_FILE_ID</pre>
+
+  <p>
+    <!-- Replace REPLACE_WITH_DRIVE_FILE_ID with your uploaded notebook file id -->
+    <a id="open-colab-2" class="btn" href="https://colab.research.google.com/drive/REPLACE_WITH_DRIVE_FILE_ID" target="_blank" rel="noopener">Open Notebook in Colab (from Drive)</a>
+  </p>
+
+  <h2>Notebook quick steps</h2>
+  <pre>
+1) Install Xfce, x11vnc, Xvfb, noVNC/websockify, cloudflared, and code-server.
+2) Start Xvfb (DISPLAY=:1), start Xfce, start x11vnc (port 5901).
+3) Start websockify/noVNC on port 6080.
+4) Configure code-server (127.0.0.1:8080) with a password (default: "colab").
+5) Launch cloudflared tunnels for 8080 and 6080; inspect /tmp/cloudflared_*.log to find .trycloudflare.com URLs.
+  </pre>
+
+  <h3>Tips</h3>
+  <ul>
+    <li>To avoid exposing both services publicly, only create the cloudflared tunnel for the one you want public (edit the final cell).</li>
+    <li>To generate a random password at runtime, modify the notebook to create a random token and print it once at startup.</li>
+  </ul>
+
+  <hr/>
+  <p class="hint">If you'd like me to produce a ready-to-run ZIP of these 4 files (2 notebooks + 2 HTML), tell me and I will prepare the ZIP content here for you to download. I cannot directly place them into your Drive without you running the upload step or providing temporary upload credentials.</p>
+</body>
+</html>
